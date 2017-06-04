@@ -34,66 +34,33 @@ public class CleverRobot extends IRobotAdapter {
 
 	private boolean loop() throws Exception {
 		// go straight if not bumped anywhere
-		driveDirect(1000, 1000);
+		driveDirect(100, 100);
 
 		// read Sensors
 		readSensors(100);
-		if(isLightBump() == true){
-			// if statement if light bump stop for 2 seconds
-			driveDirect(0,0);
-			Thread.sleep(2000);
-			// turn left for 1.7 seconds
-			driveDirect(250,1000);
-			Thread.sleep(1700);
+		int[] bumps = getLightBumps();
+		for (int i = 0; i < 6; i++) {
+			System.out.print(bumps[i] + " ");
 		}
+
+		// if statement checking if the Rumba is bumped right. If true,
+		// the Rumba turns left
 		if (isBumpRight() == true) {
 			System.out.println("I bumped Right.");
-			// if statement checking if the Rumba is bumped right. If true,
-			// the Rumba backs up for 1 second at max speed.
-			driveDirect(-1000, -1000);
-			System.out.println("I backed up fast.");
+			driveDirect(-100, 100);
 			Thread.sleep(1500);
 
-			// Rumba turns left at a steep angle for 3.5 seconds. 1:10 ration.
-			driveDirect(250, 1000);
-			System.out.println("I turned.");
-			Thread.sleep(1700);
-
 		}
-		// readSensors(100);
+		// readSensors
+		readSensors(100);
 		if (isBumpLeft() == true) {
 			System.out.println("I bumped Left.");
 			// if statement checking if the Rumba is bumped left. If true,
-			// the Rumba backs up for 1 second at max speed
-			driveDirect(-1000, -1000);
+			// the Rumba turns right.
+			driveDirect(100, -100);
 			Thread.sleep(1500);
-
-			// then the Rumba turns right for 2 seconds, max speed at 10:1
-			// ratio.
-			driveDirect(1000, 250);
-			Thread.sleep(1700);
 		}
-		
-		if (isBumpRight() == true && isBumpLeft() == false) {
-			//if statement 
-			System.out.println("I bumped right, but not left. ");
-
-		}
-
-		if (isBumpLeft() == true && isBumpRight() == false) {
-			System.out.println("I bumped left, but not right. ");
-
-		}
-		if (isBumpLeft() == true && isBumpRight() == true) {
-			System.out.println("I bumped right and left.");
-			driveDirect(-500, -500);
-			Thread.sleep(200);
-			driveDirect(700, 1000);
-			Thread.sleep(200);
-		}
-		if (isBumpRight() == false && isBumpLeft() == false) {
-			driveDirect(1000, 1000);
-		}
+		System.out.println("");
 
 		return true;
 
@@ -101,7 +68,7 @@ public class CleverRobot extends IRobotAdapter {
 
 	private void driveDirect(int i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void shutDown() throws IOException {
